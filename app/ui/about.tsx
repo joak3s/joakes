@@ -17,7 +17,7 @@ export default function About() {
         <div className="flex flex-col items-center gap-10">
           <div className="relative w-48 h-48 sm:w-64 sm:h-64 rounded-full overflow-hidden shadow-lg">
             <Image
-              src="/jordan-headshot.jpg"
+              src="/images/jordan-headshot.jpg"
               alt="Jordan Oakes"
               fill
               className="object-cover"

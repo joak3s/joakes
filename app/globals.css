@@ -1,9 +1,35 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@layer base {
+  body {
+    @apply bg-neutral-950 text-white font-roboto;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-mada;
+  }
 }
+
+/* Remove all other custom styles and keep just the essential logo styling */
+.nav-logo {
+  @apply flex items-center;
+}
+
+.nav-logo-text {
+  @apply flex text-[40px] font-mada font-black uppercase tracking-tighter;
+}
+
+.nav-logo-j {
+  @apply text-white;
+}
+
+.nav-logo-oakes {
+  @apply text-neutral-300;
+}
+
+@import "tailwindcss";
 
 @theme inline {
   --color-background: var(--background);
@@ -17,10 +43,4 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }

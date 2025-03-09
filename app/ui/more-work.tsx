@@ -5,7 +5,7 @@ const projects = [
   {
     id: 1,
     title: 'Kosei Performance',
-    image: '/kosei-performance.jpg',
+    image: '/images/kosei-performance.jpg',
     href: '/work/kosei-performance'
   },
   // Add more projects as needed
