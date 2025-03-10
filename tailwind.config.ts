@@ -20,16 +20,44 @@ const config: Config = {
       },
       animation: {
         'gradient-shift': 'gradient-shift 3s ease infinite',
+        'gradient-flow': 'gradient-flow 4s linear infinite',
         'gradient-pulse': 'gradient-pulse 4s ease-in-out infinite',
+        'blob': 'blob 7s infinite',
       },
       keyframes: {
         'gradient-shift': {
           '0%, 100%': { backgroundPosition: '0% 50%' },
           '50%': { backgroundPosition: '100% 50%' },
         },
+        'gradient-flow': {
+          '0%': { backgroundPosition: '0% 50%' },
+          '100%': { backgroundPosition: '400% 50%' },
+        },
         'gradient-pulse': {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0.8' },
+        },
+        blob: {
+          '0%': {
+            transform: 'translate(0px, 0px) scale(1)',
+          },
+          '33%': {
+            transform: 'translate(30px, -50px) scale(1.1)',
+          },
+          '66%': {
+            transform: 'translate(-20px, 20px) scale(0.9)',
+          },
+          '100%': {
+            transform: 'translate(0px, 0px) scale(1)',
+          },
+        },
+        fadeIn: {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        scrollBounce: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(6px)' },
         },
       },
     },
@@ -37,4 +65,4 @@ const config: Config = {
   plugins: [],
 };
 
-export default config; 
+export default config;
