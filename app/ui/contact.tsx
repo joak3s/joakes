@@ -1,6 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import { Mada } from 'next/font/google';
+
+const mada = Mada({
+  subsets: ["latin"],
+  weight: ["900"],
+  display: "swap",
+});
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -26,13 +33,13 @@ export default function Contact() {
   return (
     <section className="w-full py-20 bg-stone-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-4xl sm:text-5xl font-black font-mada text-neutral-200 uppercase mb-16">
+        <h2 className={`${mada.className} text-4xl sm:text-5xl font-black text-neutral-200 uppercase mb-16`}>
           Contact Me
         </h2>
 
         <div className="flex justify-center">
           <div className="w-full max-w-xl p-6 sm:p-10 bg-neutral-900 rounded-2xl border-2 border-neutral-700">
-            <h3 className="text-2xl sm:text-3xl font-medium font-mada text-neutral-200 mb-8 tracking-wide">
+            <h3 className={`${mada.className} text-2xl sm:text-3xl font-medium text-neutral-200 mb-8 tracking-wide`}>
               Fill out the form to get in touch with me!
             </h3>
 
@@ -40,7 +47,7 @@ export default function Contact() {
               <div className="space-y-2">
                 <label 
                   htmlFor="name"
-                  className="block text-neutral-300 text-base font-bold font-mada"
+                  className={`${mada.className} block text-neutral-300 text-base font-bold`}
                 >
                   Name
                 </label>
@@ -59,7 +66,7 @@ export default function Contact() {
               <div className="space-y-2">
                 <label 
                   htmlFor="email"
-                  className="block text-neutral-300 text-base font-bold font-mada"
+                  className={`${mada.className} block text-neutral-300 text-base font-bold`}
                 >
                   Email
                 </label>
@@ -78,7 +85,7 @@ export default function Contact() {
               <div className="space-y-2">
                 <label 
                   htmlFor="message"
-                  className="block text-neutral-300 text-base font-bold font-mada"
+                  className={`${mada.className} block text-neutral-300 text-base font-bold`}
                 >
                   Message
                 </label>

@@ -2,23 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  body {
-    @apply bg-neutral-950 text-white font-roboto;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-mada;
-  }
-}
-
-/* Remove all other custom styles and keep just the essential logo styling */
+/* Logo styling */
 .nav-logo {
   @apply flex items-center;
 }
 
 .nav-logo-text {
-  @apply flex text-[40px] font-mada font-black uppercase tracking-tighter;
+  @apply flex text-[40px] uppercase;
 }
 
 .nav-logo-j {

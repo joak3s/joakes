@@ -4,6 +4,7 @@ import MoreWork from './ui/more-work';
 import Testimonials from './ui/testimonials';
 import About from './ui/about';
 import Contact from './ui/contact';
+import DesignComponent from './ui/design-component';
 
 export default function Home() {
   return (

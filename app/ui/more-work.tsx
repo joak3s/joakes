@@ -1,5 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Mada } from 'next/font/google';
+
+const mada = Mada({
+  subsets: ["latin"],
+  weight: ["900"],
+  display: "swap",
+});
 
 const projects = [
   {
@@ -16,10 +23,10 @@ export default function MoreWork() {
     <section className="w-full py-20 bg-neutral-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-16">
-          <h2 className="text-4xl sm:text-5xl font-black font-mada text-neutral-200 uppercase mb-4">
+          <h2 className={`${mada.className} text-4xl sm:text-5xl font-black text-neutral-200 uppercase mb-4`}>
             More Work
           </h2>
-          <p className="text-xl sm:text-2xl font-light font-roboto text-neutral-200">
+          <p className="text-xl sm:text-2xl font-light text-neutral-200">
             Websites, Graphic Designs, and UX Designs.
           </p>
         </div>

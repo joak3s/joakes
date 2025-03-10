@@ -1,4 +1,11 @@
 import Image from 'next/image';
+import { Mada } from 'next/font/google';
+
+const mada = Mada({
+  subsets: ["latin"],
+  weight: ["900"],
+  display: "swap",
+});
 
 const testimonials = [
   {
@@ -29,10 +36,10 @@ export default function Testimonials() {
     <section className="w-full py-20 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-16">
-          <h2 className="text-4xl sm:text-5xl font-black font-mada text-zinc-900 uppercase mb-4">
+          <h2 className={`${mada.className} text-4xl sm:text-5xl font-black text-zinc-900 uppercase mb-4`}>
             Client Testimonies
           </h2>
-          <p className="text-xl sm:text-2xl font-light font-roboto text-neutral-800">
+          <p className="text-xl sm:text-2xl font-light text-neutral-800">
             A few words from those I've partnered with.
           </p>
         </div>
@@ -43,7 +50,7 @@ export default function Testimonials() {
               key={testimonial.id}
               className="flex flex-col justify-between p-6 sm:p-8 bg-neutral-200 rounded-xl h-full"
             >
-              <blockquote className="text-neutral-800 font-normal font-roboto leading-relaxed mb-8">
+              <blockquote className="text-neutral-800 font-normal leading-relaxed mb-8">
                 "{testimonial.text}"
               </blockquote>
               
@@ -57,10 +64,10 @@ export default function Testimonials() {
                   />
                 </div>
                 <div>
-                  <div className="text-neutral-800 font-bold font-mada text-lg">
+                  <div className={`${mada.className} text-neutral-800 font-bold text-lg`}>
                     {testimonial.author}
                   </div>
-                  <div className="text-neutral-800 text-sm font-normal font-mada">
+                  <div className={`${mada.className} text-neutral-800 font-thin text-sm font-normal`}>
                     {testimonial.role}
                   </div>
                 </div>

@@ -1,4 +1,11 @@
 import Image from 'next/image';
+import { Mada } from 'next/font/google';
+
+const mada = Mada({
+  subsets: ["latin"],
+  weight: ["900"],
+  display: "swap",
+});
 
 const skills = [
   "4+ years of User-Experience Designer.",
@@ -10,7 +17,7 @@ export default function About() {
   return (
     <section className="w-full py-20 bg-neutral-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-4xl sm:text-5xl font-black font-mada text-neutral-200 uppercase mb-16">
+        <h2 className={`${mada.className} text-4xl sm:text-5xl font-black text-neutral-200 uppercase mb-16`}>
           About Me
         </h2>
 
@@ -26,11 +33,11 @@ export default function About() {
           </div>
 
           <div className="max-w-2xl mx-auto text-center">
-            <h3 className="text-3xl sm:text-4xl font-black font-mada text-neutral-200 uppercase tracking-wide mb-8">
+            <h3 className={`${mada.className} text-3xl sm:text-4xl font-black text-neutral-200 uppercase tracking-wide mb-8`}>
               Jordan Oakes
             </h3>
 
-            <p className="text-xl sm:text-2xl font-bold font-mada text-neutral-200 mb-10 leading-relaxed">
+            <p className={`${mada.className} text-xl sm:text-2xl font-bold text-neutral-200 mb-10 leading-relaxed`}>
               I create user-centric websites with Webflow and bring visual concepts to life through Adobe Creative Suite.
             </p>
 
@@ -38,7 +45,7 @@ export default function About() {
               {skills.map((skill, index) => (
                 <li 
                   key={index}
-                  className="text-neutral-300 text-lg font-normal font-roboto leading-relaxed flex items-start gap-2"
+                  className="text-neutral-300 text-lg font-normal leading-relaxed flex items-start gap-2"
                 >
                   <span className="text-neutral-500 mt-1">•</span>
                   {skill}
