@@ -49,7 +49,7 @@ export default function AnimatedTitle() {
               <AnimatedSpan
                 key={index + 1}
                 style={animation}
-                className="text-neutral-600"
+                className="text-neutral-300"
               >
                 {Array.from('OAKES')[index]}
               </AnimatedSpan>

@@ -48,6 +48,18 @@ export default function Navbar() {
             >
               Contact
             </Link>
+            <Link 
+              href="/playground" 
+              className="text-white hover:text-neutral-200 text-sm font-normal transition-colors"
+            >
+              Playground
+            </Link>
+            <Link 
+              href="/particles" 
+              className="text-white hover:text-neutral-200 text-sm font-normal transition-colors"
+            >
+              Particles
+            </Link>
           </div>
 
           {/* Mobile Menu */}

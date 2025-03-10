@@ -68,6 +68,20 @@ export default function MobileMenu() {
           >
             Contact
           </Link>
+          <Link 
+            href="/playground" 
+            onClick={() => setIsOpen(false)}
+            className="text-2xl text-neutral-200 font-medium font-mada hover:text-white transition-colors tracking-tight"
+          >
+            Playground
+          </Link>
+          <Link 
+            href="/particles" 
+            onClick={() => setIsOpen(false)}
+            className="text-2xl text-neutral-200 font-medium font-mada hover:text-white transition-colors tracking-tight"
+          >
+            Particles
+          </Link>
         </nav>
       </div>
 
