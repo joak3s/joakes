@@ -31,7 +31,6 @@ export function ContactForm() {
     message: ''
   })
 
-  const [isHovered, setIsHovered] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const mouseGradient = useMouseGradient({
@@ -81,7 +80,7 @@ export function ContactForm() {
         subject: '',
         message: ''
       })
-    } catch (error) {
+    } catch {
       setStatus({
         type: 'error',
         message: 'Failed to send message. Please try again.'
@@ -106,14 +105,8 @@ export function ContactForm() {
     <motion.div
       className="relative w-full overflow-hidden rounded-2xl"
       onMouseMove={mouseGradient.handleMouseMove}
-      onMouseEnter={() => {
-        mouseGradient.handleMouseEnter()
-        setIsHovered(true)
-      }}
-      onMouseLeave={() => {
-        mouseGradient.handleMouseLeave()
-        setIsHovered(false)
-      }}
+      onMouseEnter={mouseGradient.handleMouseEnter}
+      onMouseLeave={mouseGradient.handleMouseLeave}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}

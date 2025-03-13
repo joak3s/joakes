@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, ArrowUpRight, Github, Tag } from 'lucide-react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { useMouseGradient } from '@/hooks/useMouseGradient'
@@ -75,8 +74,7 @@ const projects: Project[] = [
 
 const categories = Array.from(new Set(projects.map(project => project.category)))
 
-function ProjectCard({ title, description, image, link, github, tags }: Project) {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+function ProjectCard({ title, description, link, github, tags }: Omit<Project, 'image' | 'category'>) {
   const [glowPosition, setGlowPosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
 
@@ -84,7 +82,6 @@ function ProjectCard({ title, description, image, link, github, tags }: Project)
     const rect = e.currentTarget.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
-    setPosition({ x, y });
     setGlowPosition(prev => ({
       x: prev.x + (x - prev.x) * 0.1,
       y: prev.y + (y - prev.y) * 0.1
@@ -98,7 +95,7 @@ function ProjectCard({ title, description, image, link, github, tags }: Project)
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
-        setPosition({ x: 50, y: 50 });
+        setGlowPosition({ x: 50, y: 50 });
       }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -265,7 +262,7 @@ export function WorkGrid() {
       {/* Projects Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <AnimatePresence mode="popLayout">
-          {filteredProjects.map((project, index) => (
+          {filteredProjects.map((project) => (
             <ProjectCard key={project.title} {...project} />
           ))}
         </AnimatePresence>
@@ -277,7 +274,7 @@ export function WorkGrid() {
           <Tag className="w-12 h-12 mx-auto text-muted-foreground" />
           <h3 className="mt-4 text-lg font-semibold">No projects found</h3>
           <p className="mt-2 text-muted-foreground">
-            Try adjusting your search or filter to find what you're looking for.
+            Try adjusting your search or filter to find what you&apos;re looking for.
           </p>
         </div>
       )}

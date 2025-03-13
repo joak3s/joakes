@@ -1,10 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion'
-import { ArrowUpRight, Github } from 'lucide-react'
 import Image from 'next/image'
-import Link from 'next/link'
-import { cn } from '@/lib/utils'
 import { useState } from 'react'
 
 interface Project {
@@ -50,7 +47,6 @@ interface FeaturedWorkCardProps {
 }
 
 function FeaturedWorkCard({ title, description, image, link }: FeaturedWorkCardProps) {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
   const [glowPosition, setGlowPosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
 
@@ -58,7 +54,6 @@ function FeaturedWorkCard({ title, description, image, link }: FeaturedWorkCardP
     const rect = e.currentTarget.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
-    setPosition({ x, y });
     setGlowPosition(prev => ({
       x: prev.x + (x - prev.x) * 0.1,
       y: prev.y + (y - prev.y) * 0.1
@@ -75,7 +70,7 @@ function FeaturedWorkCard({ title, description, image, link }: FeaturedWorkCardP
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
-        setPosition({ x: 50, y: 50 });
+        setGlowPosition({ x: 50, y: 50 });
       }}
       initial={false}
       whileHover={{ scale: 1.02 }}
@@ -104,10 +99,11 @@ function FeaturedWorkCard({ title, description, image, link }: FeaturedWorkCardP
         {/* Image */}
         <div className="relative h-48 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50" />
-          <img
+          <Image
             src={image}
             alt={title}
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
           />
         </div>
 

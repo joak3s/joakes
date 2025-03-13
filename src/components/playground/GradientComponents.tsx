@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, HTMLMotionProps, useMotionTemplate, useAnimationFrame, useMotionValue } from 'framer-motion';
+import { motion, HTMLMotionProps, useMotionTemplate, useMotionValue } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useMouseGradient } from '@/hooks/useMouseGradient';
 import { useState, useCallback, memo } from 'react';

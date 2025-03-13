@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { motion, useSpring, useTransform } from 'framer-motion';
+import { useEffect, useMemo } from 'react';
+import { motion, useSpring } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Mada } from 'next/font/google';
 
@@ -12,25 +12,31 @@ const mada = Mada({
 });
 
 export function AnimatedTitle() {
-  const [isVisible, setIsVisible] = useState(false);
   const letters = Array.from('JOAKES');
+  
+  // Create individual spring animations for each letter
+  const y1 = useSpring(100, { mass: 1, stiffness: 100, damping: 15 });
+  const y2 = useSpring(100, { mass: 1, stiffness: 100, damping: 15 });
+  const y3 = useSpring(100, { mass: 1, stiffness: 100, damping: 15 });
+  const y4 = useSpring(100, { mass: 1, stiffness: 100, damping: 15 });
+  const y5 = useSpring(100, { mass: 1, stiffness: 100, damping: 15 });
+  const y6 = useSpring(100, { mass: 1, stiffness: 100, damping: 15 });
 
-  // Spring animation for each letter
-  const letterAnimations = letters.map((_, i) => {
-    const y = useSpring(100, {
-      mass: 1,
-      stiffness: 100,
-      damping: 15
-    });
+  const opacity1 = useSpring(0, { mass: 1, stiffness: 100, damping: 15 });
+  const opacity2 = useSpring(0, { mass: 1, stiffness: 100, damping: 15 });
+  const opacity3 = useSpring(0, { mass: 1, stiffness: 100, damping: 15 });
+  const opacity4 = useSpring(0, { mass: 1, stiffness: 100, damping: 15 });
+  const opacity5 = useSpring(0, { mass: 1, stiffness: 100, damping: 15 });
+  const opacity6 = useSpring(0, { mass: 1, stiffness: 100, damping: 15 });
 
-    const opacity = useSpring(0, {
-      mass: 1,
-      stiffness: 100,
-      damping: 15
-    });
-
-    return { y, opacity };
-  });
+  const letterAnimations = useMemo(() => [
+    { y: y1, opacity: opacity1 },
+    { y: y2, opacity: opacity2 },
+    { y: y3, opacity: opacity3 },
+    { y: y4, opacity: opacity4 },
+    { y: y5, opacity: opacity5 },
+    { y: y6, opacity: opacity6 }
+  ], [y1, y2, y3, y4, y5, y6, opacity1, opacity2, opacity3, opacity4, opacity5, opacity6]);
 
   // Gradient animation
   const gradientY = useSpring(100, {
@@ -46,8 +52,6 @@ export function AnimatedTitle() {
   });
 
   useEffect(() => {
-    setIsVisible(true);
-    
     // Animate letters sequentially
     letters.forEach((_, i) => {
       setTimeout(() => {
@@ -61,7 +65,7 @@ export function AnimatedTitle() {
       gradientY.set(0);
       gradientOpacity.set(1);
     }, letters.length * 100);
-  }, []);
+  }, [letters, letterAnimations, gradientY, gradientOpacity]);
 
   return (
     <div className="relative w-full overflow-hidden rounded-2xl">

@@ -34,7 +34,7 @@ export default function Hero() {
         className="relative z-10 w-full max-w-4xl mx-auto text-center mb-12"
       >
         <h1 className={`${mada.className} text-4xl md:text-5xl lg:text-6xl font-black text-foreground leading-tight tracking-tight mb-6`}>
-          I'm Jordan Oakes, a<br/>UX Designer and AI Specialist
+          I&apos;m Jordan Oakes, a<br/>UX Designer and AI Specialist
         </h1>
         <p className="text-xl md:text-2xl lg:text-3xl text-muted-foreground font-light">
           Ask my personal AI assistant about me!

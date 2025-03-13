@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Send, Bot, User } from 'lucide-react'
+import { Send, Bot } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 interface Message {
@@ -82,7 +82,7 @@ export function AIChat() {
                     <Bot className="w-8 h-8" />
                   </div>
                   <p className="text-xl font-medium mb-2 dark:text-white text-neutral-900">How can I help you today?</p>
-                  <p className="text-base dark:text-neutral-400 text-neutral-600">Ask me anything about Jordan's work and experience.</p>
+                  <p className="text-base dark:text-neutral-400 text-neutral-600">Ask me anything about Jordan&apos;s work and experience.</p>
                 </div>
               ) : (
                 messages.map((message, index) => (

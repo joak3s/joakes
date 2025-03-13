@@ -11,8 +11,6 @@ interface BorderCardProps {
   onClick?: () => void;
 }
 
-const springConfig = { stiffness: 150, damping: 15, mass: 0.1 };
-
 export function InteractiveBorderCard({ 
   title, 
   description, 
