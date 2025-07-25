@@ -1,0 +1,240 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Project {
+  id             String   @id @default(cuid())
+  title          String
+  slug           String   @unique
+  description    String?
+  summary        String?
+  challenge      String?
+  approach       String?
+  solution       String?
+  results        String?
+  website_url    String?
+  featured_order Int?
+  priority       Int?
+  status         String?  @default("draft")
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+
+  // Relations
+  images     ProjectImage[]
+  tools      ProjectTool[]
+  tags       ProjectTag[]
+  embeddings Embedding[]
+
+  @@map("projects")
+}
+
+model ProjectImage {
+  id          String   @id @default(cuid())
+  project_id  String
+  url         String
+  alt_text    String?
+  order_index Int?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  // Relations
+  project Project @relation(fields: [project_id], references: [id], onDelete: Cascade)
+
+  @@map("project_images")
+}
+
+model Tool {
+  id               String   @id @default(cuid())
+  name             String   @unique
+  slug             String   @unique
+  description      String?
+  icon             String?
+  show_in_filter   Boolean? @default(true)
+  display_priority Int?
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+
+  // Relations
+  projects ProjectTool[]
+
+  @@map("tools")
+}
+
+model ProjectTool {
+  project_id String
+  tool_id    String
+
+  // Relations
+  project Project @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  tool    Tool    @relation(fields: [tool_id], references: [id], onDelete: Cascade)
+
+  @@id([project_id, tool_id])
+  @@map("project_tools")
+}
+
+model Tag {
+  id               String   @id @default(cuid())
+  name             String   @unique
+  slug             String   @unique
+  description      String?
+  show_in_filter   Boolean? @default(true)
+  display_priority Int?
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+
+  // Relations
+  projects ProjectTag[]
+
+  @@map("tags")
+}
+
+model ProjectTag {
+  project_id String
+  tag_id     String
+
+  // Relations
+  project Project @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  tag     Tag     @relation(fields: [tag_id], references: [id], onDelete: Cascade)
+
+  @@id([project_id, tag_id])
+  @@map("project_tags")
+}
+
+model Journey {
+  id            String   @id @default(cuid())
+  title         String
+  subtitle      String?
+  description   String
+  year          String
+  icon          String
+  color         String
+  skills        String[]
+  display_order Int
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  // Relations
+  images JourneyImage[]
+
+  @@map("journey")
+}
+
+model JourneyImage {
+  id          String   @id @default(cuid())
+  journey_id  String
+  url         String
+  alt_text    String?
+  order_index Int
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  // Relations
+  journey Journey @relation(fields: [journey_id], references: [id], onDelete: Cascade)
+
+  @@map("journey_images")
+}
+
+model ConversationSession {
+  id           String   @id @default(cuid())
+  session_key  String   @unique
+  title        String   @default("New Chat")
+  summary      String?
+  metadata     Json?
+  last_updated DateTime @default(now())
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+
+  // Relations
+  messages ChatMessage[]
+
+  @@map("conversation_sessions")
+}
+
+model ChatMessage {
+  id              String   @id @default(cuid())
+  session_id      String
+  message_type    String
+  content         String
+  sequence_number Int
+  metadata        Json?
+  search_results  Json?
+  created_at      DateTime @default(now())
+
+  // Relations
+  session  ConversationSession @relation(fields: [session_id], references: [id], onDelete: Cascade)
+  contexts MessageContext[]
+  projects MessageProject[]
+
+  @@map("chat_messages")
+}
+
+model MessageContext {
+  id           String   @id @default(cuid())
+  message_id   String
+  context_type String
+  content      Json
+  content_id   String?
+  relevance    Float?
+  created_at   DateTime @default(now())
+
+  // Relations
+  message ChatMessage @relation(fields: [message_id], references: [id], onDelete: Cascade)
+
+  @@map("message_contexts")
+}
+
+model MessageProject {
+  message_id    String
+  project_id    String
+  project_image String?
+  relevance     Float?
+
+  // Relations
+  message ChatMessage @relation(fields: [message_id], references: [id], onDelete: Cascade)
+
+  @@id([message_id, project_id])
+  @@map("message_projects")
+}
+
+model Embedding {
+  id               String   @id @default(cuid())
+  content          String
+  content_type     String?
+  content_id       String?
+  project_id       String?
+  chunk_text       String?
+  chunk_index      Int?
+  chunk_metadata   Json?
+  embedding        String?
+  embedding_model  String?
+  metadata         Json?
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+
+  // Relations
+  project Project? @relation(fields: [project_id], references: [id], onDelete: Cascade)
+
+  @@map("embeddings")
+}
+
+model GeneralInfo {
+  id         String    @id @default(cuid())
+  title      String
+  content    String
+  category   String
+  keywords   String[]
+  priority   String?
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt
+
+  @@map("general_info")
+} 

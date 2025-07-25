@@ -1,0 +1,59 @@
+You are an expert in TypeScript, Supabase, Prisma, Next.js 14 with App Router, React Server Components, Tailwind CSS, Shadcn UI, and modern full-stack application architecture.
+
+    General Guidance
+    - Use type-safe TypeScript for all frontend logic and server actions.
+    - Prefer JavaScript with ES modules for backend scripts to ensure compatibility with Node.js and Prisma.
+    - Structure by responsibility: app logic in `app/`, reusable logic in `lib/`, admin scripts in `scripts/`, and data models in `prisma/`.
+    - Follow the project conventions for file structure and naming.
+
+    Backend Scripts
+    - Use native Supabase Client (`@supabase/supabase-js`) for admin tasks like updating rows, handling migrations, or syncing schema fields.
+    - Write backend scripts in modern JavaScript using ES modules (`.mjs`) or `"type": "module"` in `package.json` to avoid ESM issues with Prisma.
+    - Avoid using Prisma in CLI scripts unless strictly necessary.
+
+    Supabase
+    - Supabase is the single source of truth for authentication, storage, and database access.
+    - Use the Supabase client from `lib/supabase-admin.ts` for elevated privileges and schema updates.
+    - Rely on Supabase RLS policies for access control; validate assumptions in your scripts and UI.
+    - Use Supabase Storage for file management and link metadata to tables like `project_images`.
+
+    Prisma
+    - Use Prisma for structured querying and type safety in application code, primarily for reading data.
+    - Avoid using Prisma for schema migrations or admin writes—prefer Supabase SQL or client operations.
+    - Use `@prisma/client` and generated types for safe, readable queries in server actions and helpers.
+    - Model relationships with Prisma `include`/`select`, and use Zod to validate payloads to match types.
+
+    Next.js App Router & Server Components
+    - Use React Server Components by default; limit `use client` usage.
+    - Use `useActionState` with server actions for type-safe forms and updates.
+    - Keep all server actions under `app/actions/` and use `next-safe-action` for input/output validation.
+    - Optimize metadata with the Next.js SEO API.
+
+    UI and Styling
+    - Use Shadcn UI and Radix for accessible, composable UI components.
+    - Style using Tailwind CSS and utility functions like `cn()` for class merging.
+    - Follow a mobile-first, accessible design system with full ARIA and keyboard support.
+
+    Forms and Validation
+    - Use React Hook Form and Zod schemas for all form validation.
+    - Validate inputs in server actions and return structured errors for frontend use.
+
+    AI Chat and RAG
+    - Use Supabase for all chat data (e.g., `chat_message`, `conversation_sessions`, etc.).
+    - Implement hybrid search via `lib/hybrid-search.ts` and serve context with the Vercel AI SDK.
+    - Stream messages safely with anti-XSS handling (no raw tags visible during stream).
+
+    Naming and Typing
+    - camelCase for variables/functions, PascalCase for components/types.
+    - Use interfaces (`IName`, `NameProps`) over types for object structures.
+    - Write descriptive function names: `fetchFeaturedProjects`, `handleReorder`, `syncSchemaFromAdmin`.
+
+    Performance and DX
+    - Use `Suspense` and lazy-load non-critical components.
+    - Avoid unnecessary client-side JS by using server-first rendering.
+    - Use `dynamic()` only when SSR is not needed.
+
+    Maintainability
+    - Reuse code with helpers in `lib/`, and abstract logic with custom hooks.
+    - Include types and explicit return values for all functions and server actions.
+    - Keep scripts modular, logged, and safe to run in CI environments. 

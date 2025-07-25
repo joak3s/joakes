@@ -96,6 +96,78 @@ admin-app/
 └── README.md                  # This file
 ```
 
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+ 
+- npm, yarn, or pnpm
+- Supabase account and project
+- PostgreSQL database (via Supabase)
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd admin-app
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   # or
+   yarn install
+   # or
+   pnpm install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp .env.template .env.local
+   ```
+   
+   Edit `.env.local` with your actual values:
+   ```env
+   # Supabase Configuration
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+   
+   # Database
+   DATABASE_URL=your_database_url
+   
+   # Authentication
+   ADMIN_EMAIL=your_admin_email
+   ADMIN_PASSWORD=your_admin_password
+   
+   # OpenAI (for AI features)
+   OPENAI_API_KEY=your_openai_api_key
+   
+   # Optional: Analytics
+   GOOGLE_ANALYTICS_ID=your_ga_id
+   ```
+
+4. **Set up the database**
+   ```bash
+   # Generate Prisma client
+   npx prisma generate
+   
+   # Run database migrations
+   npx prisma db push
+   ```
+
+5. **Start the development server**
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   # or
+   pnpm dev
+   ```
+
+6. **Access the admin dashboard**
+   Navigate to `http://localhost:3000/admin` and log in with your admin credentials.
+
 ## 🔐 Authentication & Security
 
 ### Admin Access
@@ -205,6 +277,10 @@ npm run db:studio    # Open Prisma Studio
 2. Set environment variables in Vercel dashboard
 3. Deploy automatically on push to main branch
 
+### Other Platforms
+- **Netlify**: Configure build settings for Next.js
+- **Railway**: Direct deployment with environment variables
+- **Docker**: Use provided Dockerfile for containerized deployment
 
 ### Environment Variables for Production
 Ensure all required environment variables are set in your deployment platform:
@@ -221,6 +297,50 @@ Ensure all required environment variables are set in your deployment platform:
 - User engagement metrics
 - Error monitoring and logging
 
+### Integration Options
+- Google Analytics 4
+- Sentry for error tracking
+- LogRocket for session replay
+- Custom analytics endpoints
+
+## 🔄 Data Migration
+
+### From Original Portfolio
+The admin app is designed to work with the existing portfolio database. Key migration steps:
+
+1. **Database Schema**: Uses the same Prisma schema as the main portfolio
+2. **Authentication**: Shares Supabase authentication with main app
+3. **File Storage**: Uses the same Supabase storage bucket
+4. **Environment Variables**: Can share the same Supabase project
+
+### Standalone Setup
+To run as a completely separate application:
+
+1. Create new Supabase project
+2. Set up new database schema
+3. Configure separate storage bucket
+4. Update environment variables
+5. Migrate data if needed
+
+## 🤝 Contributing
+
+### Development Workflow
+1. Fork the repository
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open Pull Request
+
+### Code Standards
+- Follow TypeScript best practices
+- Write comprehensive tests
+- Update documentation for new features
+- Ensure accessibility compliance
+- Follow security best practices
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🆘 Support
 
@@ -234,3 +354,7 @@ Ensure all required environment variables are set in your deployment platform:
 - Check existing issues in the repository
 - Review Supabase and Next.js documentation
 - Contact maintainers for critical issues
+
+---
+
+**Built with ❤️ using Next.js, Supabase, and TypeScript** 

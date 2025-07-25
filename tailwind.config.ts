@@ -1,42 +1,78 @@
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
+  darkMode: ['class'],
   content: [
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './lib/**/*.{js,ts,jsx,tsx,mdx}',
-    './hooks/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './lib/**/*.{ts,tsx}',
   ],
-  darkMode: 'class',
   theme: {
+    container: {
+      center: true,
+      padding: '2rem',
+      screens: {
+        '2xl': '1400px',
+      },
+    },
     extend: {
-      animation: {
-        blob: 'blob 7s infinite',
-        'gradient-flow': 'gradientFlow 3s linear infinite',
+      colors: {
+        border: {
+          DEFAULT: 'hsl(var(--border))',
+        },
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
+        },
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
+        },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
       },
       keyframes: {
-        blob: {
-          '0%': {
-            transform: 'translate(0px, 0px) scale(1)',
-          },
-          '33%': {
-            transform: 'translate(30px, -50px) scale(1.1)',
-          },
-          '66%': {
-            transform: 'translate(-20px, 20px) scale(0.9)',
-          },
-          '100%': {
-            transform: 'translate(0px, 0px) scale(1)',
-          },
+        'accordion-down': {
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
         },
-        gradientFlow: {
-          '0%': { backgroundPosition: '200% 50%' },
-          '100%': { backgroundPosition: '-200% 50%' },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
         },
+      },
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
       },
     },
   },
-  plugins: [],
+  plugins: [require('tailwindcss-animate')],
 }
 
 export default config 
