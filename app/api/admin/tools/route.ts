@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getAdminClient } from '@/lib/database/supabase-admin'
 
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic';
+
 async function verifyAdmin() {
   // For now, just return true - implement proper admin verification later
   // In production, you would check the user's role/permissions here

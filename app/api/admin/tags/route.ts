@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getAdminClient } from '@/lib/database/supabase-admin'
 import { createServerSupabaseClient } from '@/lib/database/supabase-server'
 
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic';
+
 // Helper function to verify admin authentication
 async function verifyAdmin() {
   try {

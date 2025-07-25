@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getAdminClient } from '@/lib/database/supabase-admin'
 import type { Database } from '@/lib/types/database'
 
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic';
+
 type ProjectImageInput = {
   url: string
   alt_text?: string

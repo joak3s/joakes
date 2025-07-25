@@ -3,6 +3,9 @@ import { createServerSupabaseClient } from '@/lib/database/supabase-server'
 import { getAdminClient } from '@/lib/database/supabase-admin'
 import { uploadJourneyImage, uploadProjectImage } from "@/app/actions/admin"
 
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: Request) {
   try {
     // Authenticate

@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getAdminClient } from '@/lib/database/supabase-admin'
 
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic';
+
 // GET all general_info entries
 export async function GET() {
   try {

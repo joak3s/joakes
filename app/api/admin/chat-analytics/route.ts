@@ -13,6 +13,9 @@ interface DailyCount {
   count: number;
 }
 
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: Request) {
   try {
     // Parse URL for query parameters
