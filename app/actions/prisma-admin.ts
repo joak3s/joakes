@@ -65,17 +65,17 @@ interface ImageInput {
 // Get all projects with images, tools, and tags
 export async function getProjects() {
   try {
-    const projects = await prisma.projects.findMany({
+    const projects = await prisma.project.findMany({
       include: {
-        project_images: true,
-        project_tags: {
+        images: true,
+        tags: {
           include: {
-            tags: true
+            tag: true
           }
         },
-        project_tools: {
+        tools: {
           include: {
-            tools: true
+            tool: true
           }
         }
       },
@@ -87,8 +87,8 @@ export async function getProjects() {
     // Transform data to match your current format
     return projects.map((project) => ({
       ...project,
-      tags: project.project_tags.map(pt => pt.tags),
-      tools: project.project_tools.map(pt => pt.tools)
+      tags: project.tags.map(pt => pt.tag),
+      tools: project.tools.map(pt => pt.tool)
     }))
   } catch (error) {
     console.error('Error fetching projects:', error)
@@ -99,18 +99,18 @@ export async function getProjects() {
 // Get a specific project by slug
 export async function getProjectBySlug(slug: string) {
   try {
-    const project = await prisma.projects.findUnique({
+    const project = await prisma.project.findUnique({
       where: { slug },
       include: {
-        project_images: true,
-        project_tags: {
+        images: true,
+        tags: {
           include: {
-            tags: true
+            tag: true
           }
         },
-        project_tools: {
+        tools: {
           include: {
-            tools: true
+            tool: true
           }
         }
       }
@@ -121,8 +121,8 @@ export async function getProjectBySlug(slug: string) {
     // Transform data to match your current format
     return {
       ...project,
-      tags: project.project_tags.map(pt => pt.tags),
-      tools: project.project_tools.map(pt => pt.tools)
+      tags: project.tags.map(pt => pt.tag),
+      tools: project.tools.map(pt => pt.tool)
     }
   } catch (error) {
     console.error(`Error fetching project with slug ${slug}:`, error)
@@ -138,7 +138,7 @@ export async function updateProject(id: string, projectData: any) {
     // Check if the summary is being cleared, and preserve it if so
     if (projectFields.summary === '' || projectFields.summary === null) {
       // Fetch the current project to preserve its summary if it exists
-      const existingProject = await prisma.projects.findUnique({
+      const existingProject = await prisma.project.findUnique({
         where: { id },
         select: { summary: true }
       })
@@ -151,7 +151,7 @@ export async function updateProject(id: string, projectData: any) {
     
     await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       // Update project
-      await tx.projects.update({
+      await tx.project.update({
         where: { id },
         data: projectFields
       })
@@ -159,7 +159,7 @@ export async function updateProject(id: string, projectData: any) {
       // Update tags if provided
       if (tagIds) {
         // Remove existing tags
-        await tx.project_tags.deleteMany({
+        await tx.projectTag.deleteMany({
           where: { project_id: id }
         })
         
@@ -167,7 +167,7 @@ export async function updateProject(id: string, projectData: any) {
         if (tagIds.length > 0) {
           await Promise.all(
             tagIds.map((tagId: string) =>
-              tx.project_tags.create({
+              tx.projectTag.create({
                 data: {
                   project_id: id,
                   tag_id: tagId
@@ -181,7 +181,7 @@ export async function updateProject(id: string, projectData: any) {
       // Update tools if provided
       if (toolIds) {
         // Remove existing tools
-        await tx.project_tools.deleteMany({
+        await tx.projectTool.deleteMany({
           where: { project_id: id }
         })
         
@@ -189,7 +189,7 @@ export async function updateProject(id: string, projectData: any) {
         if (toolIds.length > 0) {
           await Promise.all(
             toolIds.map((toolId: string) =>
-              tx.project_tools.create({
+              tx.projectTool.create({
                 data: {
                   project_id: id,
                   tool_id: toolId
@@ -203,7 +203,7 @@ export async function updateProject(id: string, projectData: any) {
       // Update images if provided
       if (images) {
         // Remove existing images
-        await tx.project_images.deleteMany({
+        await tx.projectImage.deleteMany({
           where: { project_id: id }
         })
         
@@ -211,7 +211,7 @@ export async function updateProject(id: string, projectData: any) {
         if (images.length > 0) {
           await Promise.all(
             images.map((img: ImageInput, index: number) =>
-              tx.project_images.create({
+              tx.projectImage.create({
                 data: {
                   project_id: id,
                   url: img.url,
@@ -245,7 +245,7 @@ export async function createProject(projectData: any) {
     
     const result = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       // Create project
-      const project = await tx.projects.create({
+      const project = await tx.project.create({
         data: projectFields
       })
       
@@ -253,7 +253,7 @@ export async function createProject(projectData: any) {
       if (tagIds && tagIds.length > 0) {
         await Promise.all(
           tagIds.map((tagId: string) =>
-            tx.project_tags.create({
+            tx.projectTag.create({
               data: {
                 project_id: project.id,
                 tag_id: tagId
@@ -267,7 +267,7 @@ export async function createProject(projectData: any) {
       if (toolIds && toolIds.length > 0) {
         await Promise.all(
           toolIds.map((toolId: string) =>
-            tx.project_tools.create({
+            tx.projectTool.create({
               data: {
                 project_id: project.id,
                 tool_id: toolId
@@ -281,7 +281,7 @@ export async function createProject(projectData: any) {
       if (images && images.length > 0) {
         await Promise.all(
           images.map((img: ImageInput, index: number) =>
-            tx.project_images.create({
+            tx.projectImage.create({
               data: {
                 project_id: project.id,
                 url: img.url,
@@ -312,7 +312,7 @@ export async function createProject(projectData: any) {
 export async function deleteProject(id: string) {
   try {
     // Using cascade delete, we don't need to manually delete related records
-    await prisma.projects.delete({
+    await prisma.project.delete({
       where: { id }
     })
     
@@ -334,7 +334,7 @@ export async function deleteProject(id: string) {
 // Get all tags
 export async function getTags() {
   try {
-    return await prisma.tags.findMany({
+    return await prisma.tag.findMany({
       orderBy: {
         name: 'asc'
       }
@@ -348,7 +348,7 @@ export async function getTags() {
 // Create a tag
 export async function createTag(name: string, slug: string) {
   try {
-    return await prisma.tags.create({
+    return await prisma.tag.create({
       data: {
         name,
         slug: slug || name.toLowerCase().replace(/\s+/g, '-')
@@ -367,7 +367,7 @@ export async function createTag(name: string, slug: string) {
 // Get all tools
 export async function getTools() {
   try {
-    return await prisma.tools.findMany({
+    return await prisma.tool.findMany({
       orderBy: {
         name: 'asc'
       }
@@ -381,7 +381,7 @@ export async function getTools() {
 // Create a tool
 export async function createTool(name: string, slug: string, icon?: string) {
   try {
-    return await prisma.tools.create({
+    return await prisma.tool.create({
       data: {
         name,
         slug: slug || name.toLowerCase().replace(/\s+/g, '-'),

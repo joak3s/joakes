@@ -410,6 +410,11 @@ export async function updateJourneyEntry(journeyData: UpdateJourneyInput) {
     const supabase = await getAdminClient()
     const { id, ...updateData } = journeyData
     
+    // Ensure id is present
+    if (!id) {
+      throw new Error('Journey ID is required for update')
+    }
+    
     const { error } = await supabase
       .from('journey')
       .update(updateData)

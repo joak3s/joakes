@@ -125,30 +125,27 @@ export async function executeWithRetry<T>(
 }
 
 /**
- * Execute raw SQL queries (use with caution)
+ * Execute database operations using Supabase's built-in methods
+ * Note: This replaces the previous raw SQL approach with type-safe operations
  */
-export async function executeRawQuery(
-  query: string,
-  params?: any[]
-): Promise<{ data: any[] | null; error: any }> {
+export async function executeDatabaseOperation<T>(
+  operation: (client: SupabaseClient<Database>) => Promise<{ data: T | null; error: any }>
+): Promise<{ data: T | null; error: any }> {
   try {
-    console.log('🔍 Executing raw query:', query.substring(0, 100) + '...')
+    console.log('🔍 Executing database operation...')
     const client = getAdminClient()
     
-    const { data, error } = await client.rpc('exec_sql', {
-      query,
-      params: params || []
-    })
+    const result = await operation(client)
 
-    if (error) {
-      console.error('❌ Raw query failed:', error)
-      return { data: null, error }
+    if (result.error) {
+      console.error('❌ Database operation failed:', result.error)
+      return result
     }
 
-    console.log('✅ Raw query executed successfully')
-    return { data, error: null }
+    console.log('✅ Database operation executed successfully')
+    return result
   } catch (error) {
-    console.error('❌ Raw query execution failed:', error)
+    console.error('❌ Database operation execution failed:', error)
     return { data: null, error }
   }
 }
